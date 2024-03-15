@@ -2,27 +2,21 @@
 import { inputVariants } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
 import { useTheme } from "@/providers/theme";
-import algoliasearch from "algoliasearch";
 import Image from "next/image";
 import { Configure, Hits, InstantSearch, SearchBox } from "react-instantsearch";
 import algoliaBlue from "../assets/Algolia-mark-blue.png";
 import algoliaWhite from "../assets/Algolia-mark-white.png";
+import { algoliaClient } from "../client";
 import { Hit } from "./hit";
 
-// let timerId: NodeJS.Timeout | undefined = undefined;
-// let timeout = 500;
-// const queryHook = (query: string, search: (value: string) => void) => {
-//   if (timerId) {
-//     clearTimeout(timerId);
-//   }
-//   timerId = setTimeout(() => search(query), timeout);
-// };
-const algoliaConfig = {
-  appID: process.env.NEXT_PUBLIC_ALGOLIA_APP_ID,
-  token: process.env.NEXT_PUBLIC_ALGOLIA_TOKEN,
+let timerId: NodeJS.Timeout | undefined = undefined;
+let timeout = 500;
+const queryHook = (query: string, search: (value: string) => void) => {
+  if (timerId) {
+    clearTimeout(timerId);
+  }
+  timerId = setTimeout(() => search(query), timeout);
 };
-
-const algoliaClient = algoliasearch(algoliaConfig.appID!, algoliaConfig.token!);
 
 export const SearchPanel = () => {
   const theme = useTheme();
@@ -55,7 +49,7 @@ export const SearchPanel = () => {
               loadingIndicator: "hidden",
             }}
             loadingIconComponent={() => "Loading…"}
-            // queryHook={queryHook}
+            queryHook={queryHook}
           />
         </div>
         <Hits hitComponent={Hit} className="max-h-[400px] min-h-[400px]" />
