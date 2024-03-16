@@ -7,7 +7,7 @@ import { ComponentProps, memo, useMemo } from "react";
 import { Skeleton } from "../ui/skeleton";
 
 const NotionRenderer = dynamic(() =>
-  import("@/lib/notion/react-notion-x").then((x) => x.NotionRenderer)
+  import("react-notion-x").then((x) => x.NotionRenderer)
 );
 const NextImage = dynamic(() => import("@/components/next/image"));
 
@@ -86,7 +86,7 @@ const Image = (props: ComponentProps<typeof NextImage>) => {
 };
 
 const Code = dynamic(() =>
-  import("@/lib/notion/react-notion-x/third-party/code").then((m) => m.Code)
+  import("react-notion-x/build/third-party/code").then((m) => m.Code)
 );
 
 const CodeWithProps = ({
@@ -107,18 +107,16 @@ const CodeWithProps = ({
 };
 
 const Equation = dynamic(() =>
-  import("@/lib/notion/react-notion-x/third-party/equation").then(
-    (m) => m.Equation
-  )
+  import("react-notion-x/build/third-party/equation").then((m) => m.Equation)
 );
 // const Collection = dynamic(() =>
-//   import("@/lib/notion/react-notion-x/third-party/collection").then(
+//   import("react-notion-x/third-party/collection").then(
 //     (m) => m.Collection
 //   )
 // // );
 // const Modal = dynamic(
 //   () =>
-//     import("@/lib/notion/react-notion-x/third-party/modal").then(
+//     import("react-notion-x/third-party/modal").then(
 //       (m) => m.Modal
 //     ),
 //   {

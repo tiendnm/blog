@@ -1,4 +1,4 @@
-@import "../lib/notion/react-notion-x/styles.css";
+@import "/node_mobules/src/react-notion-x/styles.css";
 :root {
   --notion-item-blue: rgba(0, 120, 223, 0.8);
   --notion-item-orange: rgba(245, 93, 0, 0.8);

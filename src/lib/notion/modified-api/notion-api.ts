@@ -1,11 +1,11 @@
-import pMap from "p-map";
-import * as notion from "../notion-types";
+import * as notion from "notion-types";
 import {
   getBlockCollectionId,
   getPageContentBlockIds,
   parsePageId,
   uuidToId,
-} from "../notion-utils";
+} from "notion-utils";
+import pMap from "p-map";
 
 import * as types from "./types";
 
@@ -560,13 +560,6 @@ export class NotionAPI {
     }
     const url = `${this._apiBaseUrl}/${endpoint}`;
 
-    // return got
-    //   .post(url, {
-    //     ...gotOptions,
-    //     json: body,
-    //     headers
-    //   })
-    //   .json()
     return fetch(url, {
       method: "post",
       body: JSON.stringify(body),
