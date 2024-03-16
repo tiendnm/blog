@@ -24,10 +24,6 @@ export const NotionRenderer: React.FC<{
   rootPageId?: string;
   rootDomain?: string;
 
-  // set fullPage to false to render page content only
-  // this will remove the header, cover image, and footer
-  // fullPage?: boolean;
-
   darkMode?: boolean;
   previewImages?: boolean;
   forceCustomImages?: boolean;
@@ -46,14 +42,6 @@ export const NotionRenderer: React.FC<{
   className?: string;
   bodyClassName?: string;
 
-  // header?: React.ReactNode;
-  // footer?: React.ReactNode;
-  // pageHeader?: React.ReactNode;
-  // pageFooter?: React.ReactNode;
-  // pageTitle?: React.ReactNode;
-  // pageAside?: React.ReactNode;
-  // pageCover?: React.ReactNode;
-
   blockId?: string;
   hideBlockId?: boolean;
   disableHeader?: boolean;
@@ -65,7 +53,6 @@ export const NotionRenderer: React.FC<{
   searchNotion,
   isShowingSearch,
   onHideSearch,
-  // fullPage,
   rootPageId,
   rootDomain,
   darkMode,
@@ -91,7 +78,6 @@ export const NotionRenderer: React.FC<{
       searchNotion={searchNotion}
       isShowingSearch={isShowingSearch}
       onHideSearch={onHideSearch}
-      // fullPage={fullPage}
       rootPageId={rootPageId}
       rootDomain={rootDomain}
       darkMode={darkMode}
