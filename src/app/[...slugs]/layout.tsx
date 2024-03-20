@@ -18,6 +18,7 @@ const BlogsLayout = async ({
   const slug = params.slugs[1];
   const dbInfo = await getDatabaseInfo();
   const tags = getTags(dbInfo.properties);
+  tags.sort((a, b) => a.name.localeCompare(b.name));
   const path = ("/" + [route, slug].filter(Boolean).join("/")).toLowerCase();
   const active = path === "/blogs";
   return (

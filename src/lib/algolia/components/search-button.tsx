@@ -8,11 +8,7 @@ import {
 } from "@/components/ui/dialog";
 import { useAlgoliaContext } from "@/lib/algolia/components/provider";
 import { SearchIcon } from "lucide-react";
-import dynamic from "next/dynamic";
-const SearchPanel = dynamic(
-  () => import("./search").then((x) => x.SearchPanel),
-  { ssr: false }
-);
+import { SearchPanel } from "./search";
 
 const SearchButton = () => {
   const { searchVisible, setSearchVisible } = useAlgoliaContext();

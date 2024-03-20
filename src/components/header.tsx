@@ -5,11 +5,10 @@ import dynamic from "next/dynamic";
 import NextImage from "./next/image";
 
 const SearchButton = dynamic(
-  () => import("@/lib/algolia/components/search-button"),
-  { ssr: false }
+  () => import("@/lib/algolia/components/search-button")
 );
-const MobileNav = dynamic(() => import("./mobile-nav"), { ssr: false });
-const ThemeSwitch = dynamic(() => import("./theme-switch"), { ssr: false });
+const MobileNav = dynamic(() => import("./mobile-nav"));
+const ThemeSwitch = dynamic(() => import("./theme-switch"));
 const Header = () => {
   return (
     <header className="flex items-center justify-between py-10 px-5 lg:px-10 ">
