@@ -3,8 +3,8 @@ import { Metadata } from "next";
 export const siteMetadata: Metadata = {
   metadataBase: new URL("https://blog.tiendnm.com"),
   title: {
-    default: "tiendnm's blog",
-    template: "%s | tiendnm's blog",
+    default: "tiendnm",
+    template: "%s | tiendnm",
   },
   description: "viết về lập trình và chia sẻ snippet hữu ích",
   openGraph: {
