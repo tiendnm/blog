@@ -4,9 +4,12 @@ import NotionTitle from "@/components/notion/title";
 import { getDatabaseInfo } from "@/lib/notion-v2";
 import { getTags } from "@/lib/notion-v2/utils";
 import { cn } from "@/lib/utils";
+import { notFound } from "next/navigation";
 import { ReactNode } from "react";
 export const runtime = "edge";
 export const revalidate = 30;
+
+const ALLOWED_ROUTES = ["blogs", "tag"];
 const BlogsLayout = async ({
   children,
   params,
@@ -14,10 +17,17 @@ const BlogsLayout = async ({
   children: ReactNode;
   params: { slugs: string[] };
 }) => {
-  const route = params.slugs[0];
+  const route = params.slugs[0] as "blogs" | "tag";
+  if (!ALLOWED_ROUTES.includes(route)) return notFound();
+
   const slug = params.slugs[1];
   const dbInfo = await getDatabaseInfo();
   const tags = getTags(dbInfo.properties);
+
+  if (route === "tag" && !tags.some((tag) => tag.name === slug)) {
+    return notFound();
+  }
+
   tags.sort((a, b) => a.name.localeCompare(b.name));
   const path = ("/" + [route, slug].filter(Boolean).join("/")).toLowerCase();
   const active = path === "/blogs";

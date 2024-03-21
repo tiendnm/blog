@@ -1,6 +1,6 @@
 import { getPostBySlug } from "@/lib/notion-v2";
 import { toPost } from "@/model/post";
-import { Metadata, ResolvingMetadata } from "next";
+import { Metadata } from "next";
 import { unstable_cache } from "next/cache";
 import dynamic from "next/dynamic";
 import { notFound } from "next/navigation";
@@ -17,15 +17,11 @@ const getPageBySlug_cache = unstable_cache(getPostBySlug, ["getPostBySlug"], {
   revalidate,
 });
 
-export async function generateMetadata(
-  { params }: Props,
-  parent: ResolvingMetadata
-): Promise<Metadata> {
-  // read route params
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const slug = params.slug;
-
   // fetch data
   const postObject = await getPageBySlug_cache(slug);
+  if (!postObject.page) throw new Error();
   const post = toPost(postObject.page);
   const title = post.Title.toLowerCase();
   const description = post.Description.toLowerCase();
@@ -44,7 +40,7 @@ export async function generateMetadata(
 }
 
 async function Page({ params }: Props) {
-  if (!params.slug) return notFound();
+  if (!params.slug) notFound();
   const query = await getPageBySlug_cache(params.slug);
   return (
     <>
