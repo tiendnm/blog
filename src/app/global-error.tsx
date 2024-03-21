@@ -17,19 +17,25 @@ export default function Error({
 
   return (
     <>
-      <title>Lỗi</title>
-      <div className="flex flex-col justify-center items-center gap-5">
-        <p className="text-2xl text-foreground font-bold">Đã có lỗi xảy ra</p>
-        <button
-          onClick={() => reset()}
-          className="text-foreground underline flex gap-2 justify-center items-center"
-        >
-          <span>
-            <RefreshCwIcon />
-          </span>
-          <span>Thử lại</span>
-        </button>
-      </div>
+      <html className="h-screen">
+        <title>Lỗi</title>
+        <body className="h-screen">
+          <div className="flex flex-col justify-center items-center gap-5 h-screen">
+            <p className="text-2xl text-foreground font-bold">
+              Đã có lỗi xảy ra
+            </p>
+            <button
+              onClick={() => reset()}
+              className="text-foreground underline flex gap-2 justify-center items-center"
+            >
+              <span>
+                <RefreshCwIcon />
+              </span>
+              <span>Thử lại</span>
+            </button>
+          </div>
+        </body>
+      </html>
     </>
   );
 }
