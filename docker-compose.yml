@@ -1,10 +1,10 @@
 version: "3"
 services:
   tiendnm-blog:
-    image: tiendnm/blog
+    image: tiendnm/blog:latest
     container_name: tiendnm-blog
     restart: always
     ports:
-      - "80:3000"
+      - "8005:3000"
     env_file:
       - docker.env

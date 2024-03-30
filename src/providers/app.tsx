@@ -1,4 +1,5 @@
 "use client";
+import GiscusContextProvider from "@/lib/giscus/provider";
 import { AlgoliaProvider } from "../lib/algolia/components/provider";
 import { QueryProvider } from "./query-client";
 import { RecoilProvider } from "./recoil";
@@ -9,7 +10,9 @@ const AppProvider = ({ children }: { children: React.ReactNode }) => {
       <RecoilProvider>
         <QueryProvider>
           <ThemeContextProvider>
-            <AlgoliaProvider>{children}</AlgoliaProvider>
+            <GiscusContextProvider>
+              <AlgoliaProvider>{children}</AlgoliaProvider>
+            </GiscusContextProvider>
           </ThemeContextProvider>
         </QueryProvider>
       </RecoilProvider>

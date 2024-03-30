@@ -1,4 +1,5 @@
 "use client";
+import Giscus from "@/lib/giscus/client";
 import { increasePostView } from "@/lib/notion-v2";
 import { columnMap } from "@/lib/notion-v2/utils";
 import { ExtendedRecordMap } from "@/lib/notion/notion-types";
@@ -9,10 +10,9 @@ import {
   PageObjectResponse,
 } from "@notionhq/client/build/src/api-endpoints";
 import dynamic from "next/dynamic";
-import { Suspense, memo, useEffect, useMemo, useRef } from "react";
+import { memo, useEffect, useMemo, useRef } from "react";
 import { CoverLoading, RendererLoading, TitleLoading } from "../loading";
 
-const Giscus = dynamic(() => import("@/components/giscus"), { ssr: false });
 const NotionCover = dynamic(() => import("../cover"), {
   loading: CoverLoading,
 });
@@ -76,9 +76,7 @@ const RenderNotionPageClient = memo(
             className="text-secondary-foreground !w-full px-0"
             previewImages
           />
-          <Suspense>
-            <Giscus />
-          </Suspense>
+          <Giscus />
         </div>
       </>
     );

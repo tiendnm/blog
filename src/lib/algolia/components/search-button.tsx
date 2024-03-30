@@ -10,7 +10,7 @@ import { useAlgoliaContext } from "@/lib/algolia/components/provider";
 import { SearchIcon } from "lucide-react";
 import { SearchPanel } from "./search";
 
-const SearchButton = () => {
+const SearchButtonClient = () => {
   const { searchVisible, setSearchVisible } = useAlgoliaContext();
   return (
     <>
@@ -41,4 +41,4 @@ const SearchButton = () => {
   );
 };
 
-export default SearchButton;
+export default SearchButtonClient;

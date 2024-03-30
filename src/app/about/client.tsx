@@ -1,10 +1,9 @@
 "use client";
 
 import NotionCustomRenderer from "@/components/notion/renderer";
+import Giscus from "@/lib/giscus/client";
 import { ExtendedRecordMap } from "@/lib/notion/notion-types";
 import { useTheme } from "@/providers/theme";
-import dynamic from "next/dynamic";
-const Giscus = dynamic(() => import("@/components/giscus"), { ssr: false });
 type ClientProps = { recordMap: ExtendedRecordMap };
 
 const Client = ({ recordMap }: ClientProps) => {

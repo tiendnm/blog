@@ -2,12 +2,14 @@
 import { inputVariants } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
 import { useTheme } from "@/providers/theme";
+import algoliasearch from "algoliasearch";
 import Image from "next/image";
 import { Configure, Hits, InstantSearch, SearchBox } from "react-instantsearch";
 import algoliaBlue from "../assets/Algolia-mark-blue.png";
 import algoliaWhite from "../assets/Algolia-mark-white.png";
-import { algoliaClient } from "../client";
+import { AlgoliaConfig } from "../config";
 import { Hit } from "./hit";
+import { useAlgoliaContext } from "./provider";
 
 let timerId: NodeJS.Timeout | undefined = undefined;
 let timeout = 500;
@@ -19,11 +21,21 @@ const queryHook = (query: string, search: (value: string) => void) => {
 };
 
 export const SearchPanel = () => {
+  const algolia = useAlgoliaContext();
+  if (!algolia.config) {
+    return <></>;
+  } else {
+    return <AlgoliaSearch config={algolia.config} />;
+  }
+};
+
+const AlgoliaSearch = ({ config }: { config: AlgoliaConfig }) => {
   const theme = useTheme();
+  const algoliaClient = algoliasearch(config.appID, config.token);
   return (
     <InstantSearch
       searchClient={algoliaClient}
-      indexName="blog"
+      indexName={config.indexName}
       future={{
         preserveSharedStateOnUnmount: true,
       }}
