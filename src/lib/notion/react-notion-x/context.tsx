@@ -193,12 +193,9 @@ export const NotionContextProvider: React.FC<PartialNotionContext> = ({
   //   }
   // }
 
-  const wrappedThemeComponents = React.useMemo(
-    () => ({
-      ...themeComponents,
-    }),
-    [themeComponents]
-  );
+  const wrappedThemeComponents = {
+    ...themeComponents,
+  };
 
   if (wrappedThemeComponents.nextImage) {
     wrappedThemeComponents.Image = wrapNextImage(themeComponents.nextImage);
@@ -216,17 +213,14 @@ export const NotionContextProvider: React.FC<PartialNotionContext> = ({
   //   }
   // }
 
-  const value = React.useMemo(
-    () => ({
-      ...defaultNotionContext,
-      ...rest,
-      rootPageId,
-      mapPageUrl: mapPageUrl ?? defaultMapPageUrl(rootPageId),
-      mapImageUrl: mapImageUrl ?? defaultMapImageUrl,
-      components: { ...defaultComponents, ...wrappedThemeComponents },
-    }),
-    [mapImageUrl, mapPageUrl, wrappedThemeComponents, rootPageId, rest]
-  );
+  const value = {
+    ...defaultNotionContext,
+    ...rest,
+    rootPageId,
+    mapPageUrl: mapPageUrl ?? defaultMapPageUrl(rootPageId),
+    mapImageUrl: mapImageUrl ?? defaultMapImageUrl,
+    components: { ...defaultComponents, ...wrappedThemeComponents },
+  };
 
   return <ctx.Provider value={value}>{children}</ctx.Provider>;
 };
@@ -234,5 +228,5 @@ export const NotionContextProvider: React.FC<PartialNotionContext> = ({
 export const NotionContextConsumer = ctx.Consumer;
 
 export const useNotionContext = (): NotionContext => {
-  return React.useContext(ctx);
+  return React.use(ctx);
 };

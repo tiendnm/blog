@@ -5,7 +5,7 @@ import {
   ReactNode,
   SetStateAction,
   createContext,
-  useContext,
+  use,
   useState,
 } from "react";
 import { AlgoliaConfig, getAlgoliaConfig } from "../config";
@@ -47,5 +47,5 @@ export const AlgoliaProvider = ({ children }: { children: ReactNode }) => {
 };
 
 export const useAlgoliaContext = () => {
-  return useContext(algoliaContext);
+  return use(algoliaContext);
 };

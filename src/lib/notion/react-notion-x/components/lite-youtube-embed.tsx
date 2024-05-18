@@ -35,10 +35,7 @@ export const LiteYouTubeEmbed: React.FC<{
   className,
 }) => {
   const muteParam = mute || defaultPlay ? "1" : "0"; // Default play must be muted
-  const queryString = React.useMemo(
-    () => qs({ autoplay: "1", mute: muteParam, ...params }),
-    [muteParam, params]
-  );
+  const queryString = qs({ autoplay: "1", mute: muteParam, ...params });
   // const mobileResolution = 'hqdefault'
   // const desktopResolution = 'maxresdefault'
   const resolution = "hqdefault";
@@ -50,19 +47,19 @@ export const LiteYouTubeEmbed: React.FC<{
   const [iframeInitialized, setIframeInitialized] = React.useState(defaultPlay);
   const [isIframeLoaded, setIsIframeLoaded] = React.useState(false);
 
-  const warmConnections = React.useCallback(() => {
+  const warmConnections = () => {
     if (isPreconnected) return;
     setIsPreconnected(true);
-  }, [isPreconnected]);
+  };
 
-  const onLoadIframe = React.useCallback(() => {
+  const onLoadIframe = () => {
     if (iframeInitialized) return;
     setIframeInitialized(true);
-  }, [iframeInitialized]);
+  };
 
-  const onIframeLoaded = React.useCallback(() => {
+  const onIframeLoaded = () => {
     setIsIframeLoaded(true);
-  }, []);
+  };
 
   return (
     <>

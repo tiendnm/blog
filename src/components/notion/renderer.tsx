@@ -3,7 +3,7 @@
 import Link from "@/components/next/link";
 import { cn } from "@/lib/utils";
 import dynamic from "next/dynamic";
-import { ComponentProps, memo, useMemo } from "react";
+import { ComponentProps } from "react";
 
 const NotionRenderer = dynamic(() =>
   import("@/lib/notion/react-notion-x").then((x) => x.NotionRenderer)
@@ -14,26 +14,25 @@ type NotionCustomRendererProps = Omit<
   ComponentProps<typeof NotionRenderer>,
   "components"
 >;
-const NotionCustomRenderer = memo(
-  ({ className, ...props }: NotionCustomRendererProps) => {
-    return useMemo(() => {
-      return (
-        <NotionRenderer
-          {...props}
-          className={cn("text-secondary-foreground w-full px-0", className)}
-          forceCustomImages
-          previewImages
-          components={{
-            Code: CodeWithProps,
-            Equation,
-            PageLink: Link,
-            nextImage: Image,
-          }}
-        />
-      );
-    }, [className, props]);
-  }
-);
+const NotionCustomRenderer = ({
+  className,
+  ...props
+}: NotionCustomRendererProps) => {
+  return (
+    <NotionRenderer
+      {...props}
+      className={cn("text-secondary-foreground w-full px-0", className)}
+      forceCustomImages
+      previewImages
+      components={{
+        Code: CodeWithProps,
+        Equation,
+        PageLink: Link,
+        nextImage: Image,
+      }}
+    />
+  );
+};
 NotionCustomRenderer.displayName = "NotionCustomRenderer";
 export default NotionCustomRenderer;
 

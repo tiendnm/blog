@@ -44,7 +44,7 @@ export const Code: React.FC<{
     }
   }, [codeRef]);
 
-  const onClickCopyToClipboard = React.useCallback(() => {
+  const onClickCopyToClipboard = () => {
     copyToClipboard(content);
     setIsCopied(true);
 
@@ -56,7 +56,7 @@ export const Code: React.FC<{
     copyTimeout.current = setTimeout(() => {
       setIsCopied(false);
     }, 1200) as unknown as number;
-  }, [content, copyTimeout]);
+  };
 
   const copyButton = (
     <div className="notion-code-copy-button" onClick={onClickCopyToClipboard}>

@@ -11,9 +11,18 @@ import { NotionGalleryCoverLoading } from "../loading";
 
 type NotionGalleryItemProps = PageObjectResponse;
 
-const NotionGalleryItem = async (props: NotionGalleryItemProps) => {
-  const { Description, Id, PublishedDate, Slug, Title, Cover, Icon, Tags } =
-    toPost(props);
+const NotionGalleryItem = (props: NotionGalleryItemProps) => {
+  const {
+    Description,
+    Id,
+    PublishedDate,
+    Slug,
+    Title,
+    Cover,
+    Icon,
+    Tags,
+    View,
+  } = toPost(props);
   return (
     <>
       <Link
@@ -78,6 +87,9 @@ const NotionGalleryItem = async (props: NotionGalleryItemProps) => {
         </div>
         <div className="px-2 mb-2 text-xs line-clamp-2 text-secondary-foreground lowercase">
           {Description}
+        </div>
+        <div className="px-2 mb-2 text-xs text-muted-foreground lowercase italic">
+          Lượt xem: {View}
         </div>
         <div className="flex gap-2 px-2 mb-2 text-xs">
           {Tags.map((tag) => {

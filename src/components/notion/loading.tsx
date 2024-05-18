@@ -80,6 +80,9 @@ export const NotionGalleryItemLoading = () => {
         <div className="px-2 mb-2 text-xs line-clamp-2 text-secondary-foreground">
           <Skeleton className="w-full h-8" />
         </div>
+        <div className="px-2 pt-2 mb-2 text-xs">
+          <Skeleton className="w-1/4 h-4 px-2 pt-2 mb-2" />
+        </div>
         <div className="flex gap-2 px-2 mb-2 text-xs">
           {Array.from({ length: 2 }).map((tag, i) => {
             return <Skeleton key={i} className={"w-10 h-4"}></Skeleton>;

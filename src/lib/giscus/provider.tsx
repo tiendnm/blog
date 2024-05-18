@@ -1,6 +1,6 @@
 import { GiscusProps } from "@giscus/react";
 import { useQuery } from "@tanstack/react-query";
-import { ReactNode, createContext, useContext } from "react";
+import { ReactNode, createContext, use } from "react";
 import { getGiscusConfig } from "./config";
 
 type GiscusContextProps = {
@@ -32,6 +32,6 @@ const GiscusContextProvider = ({ children }: GiscusContextProps) => {
   );
 };
 
-export const useGiscusContext = () => useContext(giscusContext);
+export const useGiscusContext = () => use(giscusContext);
 
 export default GiscusContextProvider;

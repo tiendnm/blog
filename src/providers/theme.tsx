@@ -4,8 +4,7 @@ import {
   Dispatch,
   PropsWithChildren,
   SetStateAction,
-  useCallback,
-  useContext,
+  use,
   useEffect,
   useState,
 } from "react";
@@ -49,10 +48,10 @@ export const ThemeContextProvider = (props: PropsWithChildren) => {
 };
 
 export function useTheme() {
-  const { darkMode, setDarkMode } = useContext(ThemeContext); // first load is light
-  const toggleDarkMode = useCallback(() => {
+  const { darkMode, setDarkMode } = use(ThemeContext); // first load is light
+  const toggleDarkMode = () => {
     setDarkMode((prev) => !prev);
-  }, [setDarkMode]);
+  };
 
   return {
     darkMode,

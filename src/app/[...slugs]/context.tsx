@@ -2,7 +2,7 @@
 import { getLatestPosts, getPostsByTag } from "@/lib/notion-v2";
 import { PageObjectResponse } from "@notionhq/client/build/src/api-endpoints";
 import { UseQueryResult, useQuery } from "@tanstack/react-query";
-import { ReactNode, createContext, useContext } from "react";
+import { ReactNode, createContext, use } from "react";
 import { BlogListState, initialBlogListState, useBlogListState } from "./state";
 
 export type PostResponse = {
@@ -99,5 +99,5 @@ const BlogListContextProvider = ({
 export default BlogListContextProvider;
 
 export const useBlogListContext = () => {
-  return useContext(blogListContext);
+  return use(blogListContext);
 };

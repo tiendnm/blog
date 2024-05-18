@@ -25,14 +25,14 @@ export const Breadcrumbs: React.FC<{
 }> = ({ block, rootOnly = false }) => {
   const { recordMap, mapPageUrl, components } = useNotionContext();
 
-  const breadcrumbs = React.useMemo(() => {
+  const getBreadcrumbs = () => {
     const breadcrumbs = getPageBreadcrumbs(recordMap, block.id);
     if (rootOnly) {
       return [breadcrumbs?.[0]].filter(Boolean);
     }
-
     return breadcrumbs;
-  }, [recordMap, block.id, rootOnly]);
+  };
+  const breadcrumbs = getBreadcrumbs();
 
   return (
     <div className="breadcrumbs" key="breadcrumbs">

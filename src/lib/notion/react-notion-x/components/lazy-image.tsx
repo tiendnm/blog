@@ -30,38 +30,29 @@ export const LazyImage: React.FC<{
   const { recordMap, zoom, previewImages, forceCustomImages, components } =
     useNotionContext();
   const zoomRef = React.useRef(zoom ? zoom.clone() : null);
-  const previewImage = React.useMemo(() => {
+  const getPreviewImage = () => {
     if (!src) return null;
     return previewImages
       ? recordMap?.preview_images?.[src] ??
           recordMap?.preview_images?.[normalizeUrl(src)]
       : null;
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-  const onLoad = React.useCallback(
-    (e: any) => {
-      if (zoomable && (e.target.src || e.target.srcset)) {
-        if (zoomRef.current) {
-          (zoomRef.current as any).attach(e.target);
-        }
+  };
+  const previewImage = getPreviewImage();
+  const onLoad = (e: any) => {
+    if (zoomable && (e.target.src || e.target.srcset)) {
+      if (zoomRef.current) {
+        (zoomRef.current as any).attach(e.target);
       }
-    },
-    [zoomRef, zoomable]
-  );
+    }
+  };
 
-  const attachZoom = React.useCallback(
-    (image: any) => {
-      if (zoomRef.current && image) {
-        (zoomRef.current as any).attach(image);
-      }
-    },
-    [zoomRef]
-  );
+  const attachZoom = (image: any) => {
+    if (zoomRef.current && image) {
+      (zoomRef.current as any).attach(image);
+    }
+  };
 
-  const attachZoomRef = React.useMemo(
-    () => (zoomable ? attachZoom : undefined),
-    [zoomable, attachZoom]
-  );
+  const attachZoomRef = zoomable ? attachZoom : undefined;
 
   if (previewImage) {
     const aspectRatio =
