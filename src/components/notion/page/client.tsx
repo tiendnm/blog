@@ -46,9 +46,12 @@ const RenderNotionPageClient = memo(
     useEffect(() => {
       timeoutRef.current = setTimeout(() => {
         increasePostView(postInfo.Id);
-      }, 1000 * 5); // increase view after 3 second
+        console.log("view is increased");
+        clearTimeout(timeoutRef.current);
+      }, 1000 * 10); // increase view after 5 second
       return () => {
         clearTimeout(timeoutRef.current);
+        console.log("view is not increased");
       };
     }, [postInfo.Id]);
 

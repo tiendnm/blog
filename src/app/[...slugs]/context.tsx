@@ -48,7 +48,6 @@ const BlogListContextProvider = ({
     route,
     slug,
   });
-
   const notionBlogByTag = useQuery({
     queryKey: ["notion-blog-by-tag", slug, current],
     queryFn: async () => {

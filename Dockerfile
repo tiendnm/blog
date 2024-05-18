@@ -10,7 +10,7 @@ FROM base AS build
 WORKDIR /app
 COPY . .
 RUN --mount=type=cache,id=pnpm,target=/pnpm/store pnpm install --frozen-lockfile
-RUN pnpm add sharp
+# RUN pnpm add sharp
 RUN pnpm run build
 RUN cd .next/standalone
 

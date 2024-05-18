@@ -1,4 +1,5 @@
 "use client";
+
 import NotionGallery from "@/components/notion/gallery";
 import NotionGalleryItem from "@/components/notion/gallery/item";
 import { NotionGalleryLoading } from "@/components/notion/loading";
