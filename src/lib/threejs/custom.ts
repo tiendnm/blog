@@ -1,157 +1,35 @@
 "use client";
 
 import {
-  Box3,
-  BufferGeometry,
-  Camera,
   CameraHelper,
   Color,
-  ColorRepresentation,
-  Group,
-  HemisphereLight,
   HemisphereLightHelper,
-  Material,
-  Mesh,
-  MeshPhysicalMaterial,
-  MeshPhysicalMaterialParameters,
-  Object3DEventMap,
-  PCFSoftShadowMap,
-  PerspectiveCamera,
-  PointLight,
   PointLightHelper,
-  SRGBColorSpace,
   Scene,
   SphereGeometry,
   Vector3,
-  WebGLRenderer,
-  WebGLRendererParameters,
 } from "three";
-import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
+import { CustomCamera } from "./camera";
+import {
+  DARK_COLOR_PALETTE,
+  LIGHT_COLOR_PALETTE,
+  MAX_SCALE,
+  MAX_SPACE,
+  MIN_SCALE,
+  SPHERE_RADIUS,
+} from "./constant";
+import { CustomLightGroup } from "./light-group";
+import { CustomMesh } from "./mesh";
+import { CustomMeshPhysicalMaterial } from "./mesh-physical-material";
+import { CustomOrbitControls } from "./orbit-controls";
+import { CustomTreeJsRenderParameters, SphereMesh } from "./type";
+import {
+  getObjectSize,
+  getRandomFromRange,
+  getRandomItemFromArray,
+} from "./utils";
+import { CustomWebGLRenderer } from "./webgl-renderer";
 
-type SphereMesh = Mesh<SphereGeometry, MeshPhysicalMaterial>;
-
-const SPHERE_RADIUS: number = 6;
-const MAX_SPACE: number = 20;
-const MIN_SCALE: number = 0.8;
-const MAX_SCALE: number = 1.8;
-
-const LIGHT_COLOR_PALETTE: string[] = ["#cc9cdb", "#af9cdb"];
-const DARK_COLOR_PALETTE: string[] = ["#00162e", "#04000d"];
-
-const getRandomFromRange = (min: number, max: number): number => {
-  return Math.random() * (max - min) + min;
-};
-
-const getObjectSize = (mesh: SphereMesh): Vector3 => {
-  const measure = new Vector3();
-  const boundingBox = new Box3().setFromObject(mesh);
-  const size = boundingBox.getSize(measure);
-  return size;
-};
-
-const getRandomItemFromArray = (list: any[]): any => {
-  return list[Math.floor(Math.random() * list.length)];
-};
-
-type CustomTreeJsRenderParameters = {
-  sphereRadius: number;
-  spheresCount: number;
-  maxSpace: number;
-  minScale: number;
-  maxScale: number;
-  helper: boolean;
-  canvas: HTMLCanvasElement | null;
-  darkMode?: boolean;
-};
-
-class CustomCamera extends PerspectiveCamera {
-  constructor(
-    fov: number = 2,
-    aspect: number = window.innerWidth / window.innerHeight,
-    near: number = 1,
-    far: number = 10000
-  ) {
-    super(fov, aspect, near, far);
-    this.position.set(0, 500, -1000);
-  }
-}
-
-class CustomLightGroup extends Group {
-  pointLight: CustomPointLight;
-  hemiLight: HemisphereLight;
-  constructor() {
-    super();
-    this.pointLight = new PointLight(0xffffff, 50, 0, 1.2);
-    this.pointLight.castShadow = true;
-    this.pointLight.shadow.mapSize.width = 1024; // default
-    this.pointLight.shadow.mapSize.height = 1024; // default
-    this.pointLight.position.set(20, 20, 10);
-    this.add(this.pointLight);
-
-    this.hemiLight = new HemisphereLight(0xffffff, 0xefefef, 1);
-    this.add(this.hemiLight);
-  }
-}
-
-class CustomPointLight extends PointLight {
-  constructor(
-    color?: ColorRepresentation | undefined,
-    intensity?: number | undefined,
-    distance?: number | undefined,
-    decay?: number | undefined
-  ) {
-    super(color, intensity, distance, decay);
-    this.castShadow = true;
-    this.shadow.mapSize.width = 1024; // default
-    this.shadow.mapSize.height = 1024; // default
-    this.position.set(20, 20, 10);
-  }
-}
-class CustomOrbitControls extends OrbitControls {
-  constructor(object: Camera, domElement?: HTMLElement) {
-    super(object, domElement);
-    this.enableRotate = true;
-    this.autoRotate = true;
-    this.enableZoom = false;
-    this.autoRotateSpeed = 1;
-    this.enablePan = false;
-    this.enableDamping = true;
-    this.dampingFactor = 0.05;
-  }
-}
-
-class CustomWebGLRenderer extends WebGLRenderer {
-  constructor(parameters?: WebGLRendererParameters) {
-    super(parameters);
-    this.shadowMap.enabled = true;
-    this.shadowMap.type = PCFSoftShadowMap;
-    this.setSize(window.innerWidth, window.innerHeight);
-    this.outputColorSpace = SRGBColorSpace;
-  }
-}
-
-class CustomMeshPhysicalMaterial extends MeshPhysicalMaterial {
-  constructor(parameters?: MeshPhysicalMaterialParameters | undefined) {
-    super(parameters);
-    this.reflectivity = 2;
-    this.sheen = 1;
-    this.roughness = 0;
-    this.ior = 2.333;
-    this.specularIntensity = 1;
-  }
-}
-
-class CustomMesh<
-  TGeometry extends BufferGeometry = BufferGeometry,
-  TMaterial extends Material | Material[] = Material | Material[],
-  TEventMap extends Object3DEventMap = Object3DEventMap
-> extends Mesh<TGeometry, TMaterial, TEventMap> {
-  constructor(geometry?: TGeometry, material?: TMaterial) {
-    super(geometry, material);
-    this.castShadow = true;
-    this.receiveShadow = true;
-  }
-}
 export class CustomThreeJsRender {
   private _helper = false;
   private _requestFrameID = 0;

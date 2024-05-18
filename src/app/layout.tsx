@@ -2,6 +2,7 @@ import Loader from "@/components/loader";
 import { NavigationEvents } from "@/components/navigation-events";
 import { siteMetadata } from "@/data/site-metadata";
 
+import GoogleAdsense from "@/lib/google-ads";
 import { cn } from "@/lib/utils";
 import AppProvider from "@/providers/app";
 import type { Metadata } from "next";
@@ -57,6 +58,7 @@ export default function RootLayout({
         <Suspense fallback={null}>
           <NavigationEvents />
         </Suspense>
+        <GoogleAdsense />
       </body>
     </html>
   );
