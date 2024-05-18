@@ -1,5 +1,5 @@
 "use client";
-import { StoreApi, UseBoundStore, create } from "zustand";
+import { createFamily } from "@/lib/zustand";
 
 export type BlogListState = {
   cursors: (string | undefined)[];
@@ -14,54 +14,46 @@ export const initialBlogListState: BlogListState = {
   page: 0,
 };
 
-const blogStoreCache = new Map<
-  string,
-  UseBoundStore<StoreApi<BlogListState & BlogListAction>>
->();
-const storeFamilyBlog = (stateKey: string) => {
-  let store = blogStoreCache.get(stateKey);
-  if (!store) {
-    store = create<BlogListState & BlogListAction>((set) => ({
-      ...initialBlogListState,
-      goToPage: (next) =>
-        set((prev) => {
-          const clone = structuredClone(prev.cursors);
-          const indexOf = clone.indexOf(next);
-          if (indexOf === -1) {
-            return {
-              cursors: [...prev.cursors, next],
-              page: prev.page + 1,
-            };
-          } else {
-            return {
-              ...prev,
-              page: indexOf,
-            };
-          }
-        }),
-      goBack: () => set((prev) => ({ page: prev.page - 1 })),
-    }));
-    blogStoreCache.set(stateKey, store);
-  }
-  return store;
-};
+// const blogStoreCache = new Map<
+//   string,
+//   UseBoundStore<StoreApi<BlogListState & BlogListAction>>
+// >();
+
+const blogFamily = createFamily<BlogListState & BlogListAction>(
+  "blogs_and_tags",
+  (set) => ({
+    ...initialBlogListState,
+    goToPage: (next) =>
+      set((prev) => {
+        const clone = structuredClone(prev.cursors);
+        const indexOf = clone.indexOf(next);
+        if (indexOf === -1) {
+          return {
+            cursors: [...prev.cursors, next],
+            page: prev.page + 1,
+          };
+        } else {
+          return {
+            ...prev,
+            page: indexOf,
+          };
+        }
+      }),
+    goBack: () => set((prev) => ({ page: prev.page - 1 })),
+  })
+);
 
 type UseBlogListStateProps = {
   route: string;
   slug?: string;
 };
 export const useBlogListState = (key: UseBlogListStateProps) => {
-  const atomKey = [key.route, key.slug].join("_");
-  const family = storeFamilyBlog(atomKey);
-  const state = family((state) => {
-    const { goBack, goToPage, ...rest } = state;
-    return rest;
-  });
-  const current = family((state) => state.cursors[state.page]);
-  const goBack = family((state) => state.goBack);
-  const goToPage = family((state) => state.goToPage);
+  const atomKey = [key.route, key.slug].filter(Boolean).join("_");
+  const { cursors, goBack, goToPage, page } = blogFamily(atomKey).getState();
+  const current = cursors[page];
   return [
-    state,
+    page,
+    cursors,
     {
       current,
       goToPage,
