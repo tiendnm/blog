@@ -34,7 +34,6 @@ const blogFamily = createFamily<BlogListState & BlogListAction>(
           };
         } else {
           return {
-            ...prev,
             page: indexOf,
           };
         }
@@ -49,11 +48,15 @@ type UseBlogListStateProps = {
 };
 export const useBlogListState = (key: UseBlogListStateProps) => {
   const atomKey = [key.route, key.slug].filter(Boolean).join("_");
-  const { cursors, goBack, goToPage, page } = blogFamily(atomKey).getState();
+  const { cursors, goBack, goToPage, page } = blogFamily(atomKey)(
+    (state) => state
+  );
   const current = cursors[page];
   return [
-    page,
-    cursors,
+    {
+      page,
+      cursors,
+    },
     {
       current,
       goToPage,

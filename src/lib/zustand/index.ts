@@ -42,6 +42,7 @@ export function createFamily<
 
   const getMember = (key: string) => {
     const master = getMaster();
+
     let store = master.get(key);
     if (!store) {
       store = create<T, Mos>(initializer);
